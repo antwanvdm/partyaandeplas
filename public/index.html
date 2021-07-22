@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Party aan de Plas - 4 september 2021 in het Kralingse Bos uitgevoerd door Iris, Antwan & Loan"/>
+    <title>Party aan de Plas</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicons/favicon-16x16.png">
+    <link rel="manifest" href="images/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="images/favicons/favicon.ico">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" rel="stylesheet"/>
+    <style>
+        body {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="justify-center">
+<main class="px-4 sm:px-6 lg:px-4 xl:px-6 pt-4 pb-4 sm:pb-6 lg:pb-4 xl:pb-6 space-y-4" id="main">
+    <header class="flex items-center justify-between">
+        <div>
+            <img src="images/favicons/android-chrome-192x192.png" alt="Party aan de Plas" class="inline-block w-5 pt"/>
+            <h1 class="inline-block text-lg leading-3 font-bold text-black">Party aan de Plas</h1>
+        </div>
+    </header>
+    <p id="paragraph-text" class="text-base text mt-3">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid facilis illo molestiae obcaecati rem sed! Assumenda commodi cum expedita labore magnam nisi veritatis? Alias aperiam atque
+        cumque esse quaerat vero?
+    </p>
+    <form id="name-form" class="relative">
+        <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-48 text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-3" id="name" type="text" aria-label="Naam" placeholder="Naam" required/>
+        <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-3" type="submit" value="Let's Go!"/>
+    </form>
+    <div id="maps" class="w-full h-80"></div>
+    <div class="loader-overlay absolute top-0 left-0 right-0 bottom-0 w-full z-50 overflow-hidden bg-white opacity-75 flex flex-col items-center justify-center">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+    </div>
+</main>
+<script type="text/javascript" src="dist/main.js"></script>
+</body>
+</html>

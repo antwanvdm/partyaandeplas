@@ -1,0 +1,16 @@
+{
+    "name": "partyaandeplas/api",
+    "description": "API for the Party aan de Plas app",
+    "type": "project",
+    "authors": [
+        {
+            "name": "antwan",
+            "email": "antwanvdm@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "System\\": "System"
+        }
+    }
+}

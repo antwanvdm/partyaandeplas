@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-custom {
+    font-size: 0.9rem;
+}
+
+body.loaded {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+.w-48 {
+    width: 48%;
+}
+
+.error {
+    @apply border-red-500;
+}
+
+label.error {
+    @apply text-red-500;
+}
+
+header img {
+    margin-top: -0.4rem;
+}
+
+.loader-overlay {
+    transition: opacity 1s ease-in-out;
+}
+
+.loader-overlay.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    border-top-color: #3498db;
+    -webkit-animation: spinner 1.5s linear infinite;
+    animation: spinner 1.5s linear infinite;
+}
+
+@-webkit-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
