@@ -3,9 +3,12 @@ import MapBoxInteraction from "./MapBoxInteraction";
 
 const Application = function () {
     this.mapBoxInteraction = null;
+    this.loaderOverlay = null;
+    this.playerId = null;
 
     this.init = () => {
         document.querySelector("body").classList.add('loaded');
+        this.loaderOverlay = document.querySelector(".loader-overlay");
         if (document.location.pathname !== "/") {
             return;
         }
@@ -26,7 +29,6 @@ const Application = function () {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                location: this.mapBoxInteraction.currentLocation,
                 name: document.querySelector("#name").value
             })
         }).then((response) => {
@@ -39,8 +41,9 @@ const Application = function () {
                     }
                 }
             } else {
-                document.querySelector("body").classList.remove('loaded');
+                this.loaderOverlay.classList.remove("hide");
                 this.mapBoxInteraction = new MapBoxInteraction(this.getCurrentLocation);
+                this.playerId = data.id;
             }
         });
     }
@@ -48,7 +51,8 @@ const Application = function () {
     this.getCurrentLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
             this.mapBoxInteraction.addCurrentLocation(position.coords.latitude, position.coords.longitude);
-            document.querySelector("body").classList.add('loaded');
+            this.loaderOverlay.classList.add("hide");
+            document.querySelector("#intro").remove();
         }, () => {
             alert("Sorry, zonder je locatie kun je deze app niet gebruiken!");
         });

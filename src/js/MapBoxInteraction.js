@@ -8,6 +8,7 @@ const MapBoxInteraction = function (loadedCallback) {
 
     this.init = () => {
         mapboxgl.accessToken = this.accessToken;
+        document.querySelector("#maps").classList.remove('hide');
 
         this.map = new mapboxgl.Map({
             container: 'maps',
@@ -26,58 +27,7 @@ const MapBoxInteraction = function (loadedCallback) {
             .setLngLat(this.currentLocation)
             .addTo(this.map);
         this.map.setCenter(this.currentLocation);
-        this.map.setZoom(10);
-        document.querySelector(".loader-overlay").classList.add("hide");
-
-        this.setRangeCircle();
-    }
-
-    this.setRangeCircle = () => {
-        this.map.addSource('markers', {
-            "type": "geojson",
-            "data": {
-                "type": "FeatureCollection",
-                "features": [{
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": this.currentLocation
-                    },
-                    "properties": {
-                        "modelId": 1,
-                    },
-                }]
-            }
-        });
-        this.map.addLayer({
-            "id": "kmRangeCircle",
-            "source": "markers",
-            "type": "circle",
-            "paint": {
-                "circle-radius": {
-                    stops: [
-                        [0, 0],
-                        [20, this.metersToPixelsAtMaxZoom(5000, this.currentLocation[1])]
-                    ],
-                    base: 2
-                },
-                "circle-color": "#FF0000",
-                "circle-opacity": 0.5,
-                "circle-stroke-width": 0,
-            },
-            "filter": ["==", "modelId", 1],
-        });
-    }
-
-    this.updateRangeCircle = (range) => {
-        let radiusObject = {
-            stops: [
-                [0, 0],
-                [20, this.metersToPixelsAtMaxZoom(range * 1000, this.currentLocation[1])]
-            ],
-            base: 2
-        }
-        this.map.setPaintProperty('kmRangeCircle', 'circle-radius', radiusObject);
+        this.map.setZoom(15);
     }
 
     this.metersToPixelsAtMaxZoom = (meters, latitude) => {

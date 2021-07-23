@@ -31,10 +31,10 @@ class Player
 
     /**
      * @param Player $player
-     * @return bool
+     * @return bool|int
      * @throws \Exception
      */
-    public static function add(Player $player): bool
+    public static function add(Player $player): bool|int
     {
         $db = Database::getInstance();
         $statement = $db->prepare(
@@ -42,10 +42,13 @@ class Player
                    (name)
                    VALUES(:name)"
         );
-        return $statement->execute(
+
+        $executed = $statement->execute(
             [
                 ':name' => $player->name
             ]
         );
+
+        return $executed ? $db->lastInsertId() : false;
     }
 }

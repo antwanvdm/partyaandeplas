@@ -11,6 +11,11 @@ body.loaded {
     transition: opacity 0.5s ease-in;
 }
 
+#maps {
+    height: calc(100% - 46px);
+    top: 46px;
+}
+
 .w-48 {
     width: 48%;
 }
@@ -31,7 +36,7 @@ header img {
     transition: opacity 1s ease-in-out;
 }
 
-.loader-overlay.hide {
+.hide {
     opacity: 0;
     pointer-events: none;
 }

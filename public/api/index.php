@@ -1,4 +1,5 @@
 <?php
+
 require_once "../../settings.php";
 require_once "vendor/autoload.php";
 
@@ -13,7 +14,6 @@ use System\PlayerValidation;
 //Relevant variables to use
 $response = [];
 $data = json_decode(file_get_contents('php://input'), true);
-$sendgrid = new \SendGrid(SENDGRID_API_KEY);
 
 //Make sure no bad requests pass and mess up our DB/queries
 if ($data === null || empty($data)) {
@@ -28,37 +28,11 @@ if ($data === null || empty($data)) {
     } else {
         $newPlayer = $playerValidation->getPlayer();
 
-        //Check is there is a match
-        $players = Player::getPlayersByLocationRange($newPlayer);
-        if (empty($players)) {
-            $response['results'] = false;
-        } else {
-            $response['results'] = count($players);
-            foreach ($players as $player) {
-                $mail = new \System\Mail($sendgrid);
-                $mail->setTemplate('mail-to-existing-player', [
-                    'player' => $player,
-                    'newPlayer' => $newPlayer
-                ]);
-                if ($mail->send($player->email) === false) {
-                    $response['error'] = "Er is helaas iets fout gegaan. (2)";
-                }
-            }
-
-            //Send email to the person that signed up
-            $mail = new \System\Mail($sendgrid);
-            $mail->setTemplate('mail-to-new-player', [
-                'newPlayer' => $newPlayer,
-                'players' => $players
-            ]);
-            if ($mail->send($newPlayer->email) === false) {
-                $response['error'] = "Er is helaas iets fout gegaan. (2)";
-            }
-        }
-
         //Store in DB
-        if (Player::add($newPlayer) === false) {
+        if (($id = Player::add($newPlayer)) === false) {
             $response['error'] = "Het opslaan is mislukt.";
+        } else {
+            $response['id'] = $id;
         }
     }
 }
