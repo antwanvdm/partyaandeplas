@@ -30,6 +30,11 @@ const MapBoxInteraction = function (loadedCallback) {
         this.map.setZoom(15);
     }
 
+    this.addQuestionsLocations = (questions) => {
+        //TODO add questions as red markers (they will be green once done)
+        console.log(questions);
+    }
+
     this.metersToPixelsAtMaxZoom = (meters, latitude) => {
         return meters / 0.075 / Math.cos(latitude * Math.PI / 180);
     }

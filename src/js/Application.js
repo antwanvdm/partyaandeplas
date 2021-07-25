@@ -21,7 +21,7 @@ const Application = function () {
 
         document.querySelector("#name").classList.remove("error");
 
-        fetch(settings.apiURL, {
+        fetch(`${settings.apiURL}newplayer`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -51,10 +51,28 @@ const Application = function () {
     this.getCurrentLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
             this.mapBoxInteraction.addCurrentLocation(position.coords.latitude, position.coords.longitude);
+            this.getQuestions();
             this.loaderOverlay.classList.add("hide");
             document.querySelector("#intro").remove();
         }, () => {
             alert("Sorry, zonder je locatie kun je deze app niet gebruiken!");
+        });
+    }
+
+    this.getQuestions = () => {
+        fetch(`${settings.apiURL}questions`, {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            if (typeof data.questions !== 'undefined') {
+                this.mapBoxInteraction.addQuestionsLocations(data.questions);
+            }
         });
     }
 

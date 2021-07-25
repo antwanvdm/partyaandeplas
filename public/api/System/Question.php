@@ -15,19 +15,36 @@ class Question
     public string $answer4;
     public string $correct;
     public string $fact;
-    public string $location;
     public bool $hidden;
+    public float $lat;
+    public float $lon;
+
+    /**
+     * @return Question[]
+     */
+    public static function getAll(): array
+    {
+        $db = Database::getInstance();
+        $statement = $db->prepare("SELECT * FROM questions AS q");
+        try {
+            $statement->execute();
+        }catch(\Throwable $e){
+            echo $e->getMessage();
+        }
+
+        return $statement->fetchAll(\PDO::FETCH_CLASS,"System\\Question");
+    }
 
     /**
      * @param int $id
      * @return Question
      * @throws \Exception
      */
-    public static function getQuestionById(int $id): Question
+    public static function getById(int $id): Question
     {
         $db = Database::getInstance();
         $statement = $db->prepare(
-            "SELECT * FROM players AS p
+            "SELECT * FROM questions AS q
                             WHERE id = :id"
         );
 
@@ -63,8 +80,9 @@ class Question
                 ':answer4' => $question->answer4,
                 ':correct' => $question->correct,
                 ':fact' => $question->fact,
-                ':location' => $question->location,
                 ':hidden' => $question->hidden,
+                ':lat' => $question->lat,
+                ':lon' => $question->lon,
             ]
         );
     }

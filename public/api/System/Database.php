@@ -1,4 +1,5 @@
-<?php namespace System;
+<?php
+namespace System;
 
 /**
  * Class Database
@@ -34,12 +35,14 @@ class Database
 
     /**
      * @return \PDO
-     * @throws \Exception
      */
     public static function getInstance(): \PDO
     {
-        if (self::$instance === null) {
-            self::$instance = (new Database(DB_HOST, DB_USER, DB_PASS, DB_NAME))->getConnection();
+        try {
+            if (self::$instance === null) {
+                self::$instance = (new Database(DB_HOST, DB_USER, DB_PASS, DB_NAME))->getConnection();
+            }
+        } catch (\Throwable $e) {
         }
 
         return self::$instance;
@@ -53,7 +56,11 @@ class Database
     private function connect(): void
     {
         try {
-            $this->connection = new \PDO("mysql:dbname=$this->database;host=$this->host", $this->username, $this->password);
+            $this->connection = new \PDO(
+                "mysql:dbname=$this->database;host=$this->host",
+                $this->username,
+                $this->password
+            );
             $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
             throw new \Exception("DB Connection failed: " . $e->getMessage());

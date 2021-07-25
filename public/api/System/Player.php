@@ -32,7 +32,6 @@ class Player
     /**
      * @param Player $player
      * @return bool|int
-     * @throws \Exception
      */
     public static function add(Player $player): bool|int
     {
@@ -43,11 +42,15 @@ class Player
                    VALUES(:name)"
         );
 
-        $executed = $statement->execute(
-            [
-                ':name' => $player->name
-            ]
-        );
+        try {
+            $executed = $statement->execute(
+                [
+                    ':name' => $player->name
+                ]
+            );
+        } catch (\PDOException $e) {
+            $executed = false;
+        }
 
         return $executed ? $db->lastInsertId() : false;
     }
