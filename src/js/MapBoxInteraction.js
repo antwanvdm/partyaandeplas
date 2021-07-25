@@ -5,10 +5,10 @@ const MapBoxInteraction = function (loadedCallback) {
     this.map = false;
     this.accessToken = settings.mapBoxAccessToken;
     this.currentLocation = [0, 0];
+    this.questionMarkers = {};
 
     this.init = () => {
         mapboxgl.accessToken = this.accessToken;
-        document.querySelector("#maps").classList.remove('hide');
 
         this.map = new mapboxgl.Map({
             container: 'maps',
@@ -27,19 +27,24 @@ const MapBoxInteraction = function (loadedCallback) {
             .setLngLat(this.currentLocation)
             .addTo(this.map);
         this.map.setCenter(this.currentLocation);
-        this.map.setZoom(15);
+        this.map.setZoom(16);
     }
 
     this.addQuestionsLocations = (questions) => {
-        //TODO add questions as red markers (they will be green once done)
-        console.log(questions);
+        for (let question of questions) {
+            this.questionMarkers[question.id] = {};
+            this.questionMarkers[question.id].question = question;
+            this.questionMarkers[question.id].marker = new mapboxgl.Marker({"color": "#FF0000"})
+                .setLngLat([question.lon, question.lat])
+                .addTo(this.map);
+        }
     }
 
     this.metersToPixelsAtMaxZoom = (meters, latitude) => {
         return meters / 0.075 / Math.cos(latitude * Math.PI / 180);
     }
 
-    this.disable = () =>{
+    this.disable = () => {
         this.map.boxZoom.disable();
         this.map.scrollZoom.disable();
         this.map.dragPan.disable();

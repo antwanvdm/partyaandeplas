@@ -1,19 +1,26 @@
 import settings from "./application.config";
 import MapBoxInteraction from "./MapBoxInteraction";
+import QRScan from "./QRScan";
 
 const Application = function () {
     this.mapBoxInteraction = null;
-    this.loaderOverlay = null;
+    this.applicationWrapper = document.querySelector("#application-wrapper");
+    this.loaderOverlay = document.querySelector(".loader-overlay");
+    this.scanButton = document.querySelector("#scan");
+    this.scanClose = document.querySelector("#scan-close");
+    this.scanModal = document.querySelector("#scan-modal");
     this.playerId = null;
+    this.qrScan = null;
 
     this.init = () => {
         document.querySelector("body").classList.add('loaded');
-        this.loaderOverlay = document.querySelector(".loader-overlay");
         if (document.location.pathname !== "/") {
             return;
         }
 
-        document.querySelector("#name-form").addEventListener('submit', this.formSubmitHandler);
+        document.querySelector("#name-form").addEventListener('submit', (e) => this.formSubmitHandler(e));
+        this.scanButton.addEventListener('click', (e) => this.scanOpenClickHandler(e));
+        this.scanClose.addEventListener('click', (e) => this.scanCloseClickHandler(e));
     }
 
     this.formSubmitHandler = (e) => {
@@ -41,7 +48,7 @@ const Application = function () {
                     }
                 }
             } else {
-                this.loaderOverlay.classList.remove("hide");
+                this.applicationWrapper.classList.remove("hide");
                 this.mapBoxInteraction = new MapBoxInteraction(this.getCurrentLocation);
                 this.playerId = data.id;
             }
@@ -74,6 +81,23 @@ const Application = function () {
                 this.mapBoxInteraction.addQuestionsLocations(data.questions);
             }
         });
+    }
+
+    this.scanOpenClickHandler = (e) => {
+        e.preventDefault();
+        this.scanModal.classList.remove("hide");
+        this.scanModal.classList.remove('pointer-events-none');
+        document.querySelector('body').classList.add('modal-active');
+        this.qrScan = new QRScan();
+    }
+
+    this.scanCloseClickHandler = (e) => {
+        console.log("close");
+        e.preventDefault();
+        this.scanModal.classList.add("hide");
+        this.scanModal.classList.add('pointer-events-none');
+        document.querySelector('body').classList.remove('modal-active');
+        this.qrScan.close();
     }
 
     this.init();
