@@ -24,6 +24,11 @@ const Application = function () {
         this.scanButton.addEventListener('click', (e) => this.scanOpenClickHandler(e));
         this.scanClose.addEventListener('click', (e) => this.scanCloseClickHandler(e));
         this.questionForm.addEventListener('submit', (e) => this.questionFormSubmitHandler(e));
+
+        let playerIdLocalStorage = localStorage.getItem('playerId');
+        if (playerIdLocalStorage !== null) {
+            this.loadApplicationWrapper(playerIdLocalStorage);
+        }
     }
 
     this.playerFormSubmitHandler = (e) => {
@@ -51,12 +56,17 @@ const Application = function () {
                     }
                 }
             } else {
-                window.scroll(0, 0);
-                this.applicationWrapper.classList.remove("hide");
-                this.mapBoxInteraction = new MapBoxInteraction(this.getCurrentLocation);
-                this.playerId = data.id;
+                this.loadApplicationWrapper(data.id);
+                localStorage.setItem('playerId', this.playerId);
             }
         });
+    }
+
+    this.loadApplicationWrapper = (playerId) => {
+        window.scroll(0, 0);
+        this.applicationWrapper.classList.remove("hide");
+        this.mapBoxInteraction = new MapBoxInteraction(this.getCurrentLocation);
+        this.playerId = playerId;
     }
 
     this.getCurrentLocation = () => {
@@ -182,6 +192,7 @@ const Application = function () {
 
                 this.mapBoxInteraction.markLocationAsDone(questionId);
                 this.questionModal.querySelector('#question-close').addEventListener('click', (e) => this.questionCloseHandler(e));
+                this.saveAnsweredQuestionsToLocalStorage(questionId);
             }
         });
     }
@@ -191,6 +202,16 @@ const Application = function () {
         this.questionModal.classList.add("hide");
         this.questionModal.classList.add('pointer-events-none');
         document.querySelector('body').classList.remove('modal-active');
+    }
+
+    this.saveAnsweredQuestionsToLocalStorage = (questionId) => {
+        let answeredLocalStorage = localStorage.getItem('answered');
+        let currentAnswered = answeredLocalStorage === null ? [] : JSON.parse(answeredLocalStorage);
+
+        if (currentAnswered.indexOf(questionId) === -1) {
+            currentAnswered.push(parseInt(questionId));
+            localStorage.setItem('answered', JSON.stringify(currentAnswered));
+        }
     }
 
     this.init();

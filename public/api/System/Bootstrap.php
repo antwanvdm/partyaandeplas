@@ -8,7 +8,7 @@ namespace System;
  */
 class Bootstrap
 {
-    private array $postData = [];
+    private ?array $postData = [];
     private array $response = [];
 
     /**

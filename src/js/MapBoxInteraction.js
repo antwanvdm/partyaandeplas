@@ -40,11 +40,19 @@ const MapBoxInteraction = function (loadedCallback) {
     }
 
     this.addQuestionsLocations = (questions) => {
+        let answeredLocalStorage = localStorage.getItem('answered');
+        let answeredQuestions = answeredLocalStorage !== null ? JSON.parse(answeredLocalStorage) : [];
+
         for (let question of questions) {
             this.questionMarkers[question.id] = {};
             this.questionMarkers[question.id].question = question;
             if (!question.hidden) {
-                this.questionMarkers[question.id].marker = new mapboxgl.Marker({"color": "#FF0000"})
+                let color = "#FF0000";
+                if (answeredQuestions.indexOf(question.id) > -1) {
+                    this.questionMarkers[question.id].answered = true;
+                    color = "#00FF00";
+                }
+                this.questionMarkers[question.id].marker = new mapboxgl.Marker({"color": color})
                     .setLngLat([question.lon, question.lat])
                     .addTo(this.map);
             }
