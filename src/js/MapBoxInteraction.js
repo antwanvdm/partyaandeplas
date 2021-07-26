@@ -5,6 +5,7 @@ const MapBoxInteraction = function (loadedCallback) {
     this.map = false;
     this.accessToken = settings.mapBoxAccessToken;
     this.currentLocation = [0, 0];
+    this.currentLocationMarker = null;
     this.questionMarkers = {};
 
     this.init = () => {
@@ -23,11 +24,19 @@ const MapBoxInteraction = function (loadedCallback) {
     this.addCurrentLocation = (lat, lng) => {
         this.currentLocation = [lng, lat];
 
-        let marker = new mapboxgl.Marker()
+        let markerEl = document.createElement('div');
+        markerEl.classList.add('marker-current-location');
+        this.currentLocationMarker = new mapboxgl.Marker(markerEl)
             .setLngLat(this.currentLocation)
             .addTo(this.map);
         this.map.setCenter(this.currentLocation);
         this.map.setZoom(16);
+    }
+
+    this.updateCurrentLocation = (lat, lng) => {
+        this.currentLocation = [lng, lat];
+        this.currentLocationMarker.setLngLat(this.currentLocation);
+        this.map.setCenter(this.currentLocation);
     }
 
     this.addQuestionsLocations = (questions) => {

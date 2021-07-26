@@ -22,6 +22,7 @@ const QRScan = function (callback) {
 
     this.tick = () => {
         if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
+            //TODO Test the scan on mobile to see how it looks
             // console.log(this.canvasElement.width);
             // console.log(this.video.videoWidth);
             // console.log(this.video.videoHeight);
@@ -32,7 +33,6 @@ const QRScan = function (callback) {
                 inversionAttempts: "dontInvert",
             });
             if (code) {
-                console.log(code);
                 let parsedData = JSON.parse(code.data);
 
                 if (typeof parsedData.id !== "undefined") {

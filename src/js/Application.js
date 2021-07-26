@@ -65,6 +65,7 @@ const Application = function () {
             this.getQuestions();
             this.loaderOverlay.classList.add("hide");
             document.querySelector("#intro").remove();
+            navigator.geolocation.watchPosition((position) => this.mapBoxInteraction.updateCurrentLocation(position.coords.latitude, position.coords.longitude));
         }, () => {
             alert("Sorry, zonder je locatie kun je deze app niet gebruiken!");
         });
