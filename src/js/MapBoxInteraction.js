@@ -34,10 +34,24 @@ const MapBoxInteraction = function (loadedCallback) {
         for (let question of questions) {
             this.questionMarkers[question.id] = {};
             this.questionMarkers[question.id].question = question;
-            this.questionMarkers[question.id].marker = new mapboxgl.Marker({"color": "#FF0000"})
-                .setLngLat([question.lon, question.lat])
-                .addTo(this.map);
+            if (!question.hidden) {
+                this.questionMarkers[question.id].marker = new mapboxgl.Marker({"color": "#FF0000"})
+                    .setLngLat([question.lon, question.lat])
+                    .addTo(this.map);
+            }
         }
+    }
+
+    this.markLocationAsDone = (id) => {
+        if (typeof this.questionMarkers[id].marker !== "undefined") {
+            this.questionMarkers[id].marker.remove();
+        }
+
+        let question = this.questionMarkers[id].question;
+        this.questionMarkers[id].answered = true;
+        this.questionMarkers[question.id].marker = new mapboxgl.Marker({"color": "#00FF00"})
+            .setLngLat([question.lon, question.lat])
+            .addTo(this.map);
     }
 
     this.metersToPixelsAtMaxZoom = (meters, latitude) => {

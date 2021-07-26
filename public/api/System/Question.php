@@ -1,4 +1,5 @@
 <?php
+
 namespace System;
 
 /**
@@ -28,11 +29,11 @@ class Question
         $statement = $db->prepare("SELECT * FROM questions AS q");
         try {
             $statement->execute();
-        }catch(\Throwable $e){
-            echo $e->getMessage();
+        } catch (\Throwable $e) {
+            return [];
         }
 
-        return $statement->fetchAll(\PDO::FETCH_CLASS,"System\\Question");
+        return $statement->fetchAll(\PDO::FETCH_CLASS, "System\\Question");
     }
 
     /**

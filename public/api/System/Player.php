@@ -16,7 +16,7 @@ class Player
      * @return Player[]
      * @throws \Exception
      */
-    public static function getPlayers(Player $player): array
+    public static function getAll(Player $player): array
     {
         $db = Database::getInstance();
         $statement = $db->prepare(
@@ -27,6 +27,28 @@ class Player
         $statement->execute();
 
         return $statement->fetchAll(\PDO::FETCH_CLASS, "System\\Player");
+    }
+
+    /**
+     * @param int $id
+     * @return Player
+     * @throws \Exception
+     */
+    public static function getById(int $id): Player
+    {
+        $db = Database::getInstance();
+        $statement = $db->prepare(
+            "SELECT * FROM players AS p
+                            WHERE id = :id"
+        );
+
+        $statement->execute(
+            [
+                ":id" => $id
+            ]
+        );
+
+        return $statement->fetchObject("System\\Player");
     }
 
     /**
@@ -53,5 +75,33 @@ class Player
         }
 
         return $executed ? $db->lastInsertId() : false;
+    }
+
+    /**
+     * @param $questionId
+     * @param $answer
+     * @return bool
+     */
+    public function saveAnswer($questionId, $answer): bool
+    {
+        $db = Database::getInstance();
+        $statement = $db->prepare(
+            "INSERT INTO player_question
+                   (player_id, question_id, answer, score)
+                   VALUES(:playerId, :questionId, :answer, :score)"
+        );
+
+        try {
+            return $statement->execute(
+                [
+                    ':playerId' => $this->id,
+                    ':questionId' => $questionId,
+                    ':answer' => $answer,
+                    ':score' => 1,
+                ]
+            );
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
 }

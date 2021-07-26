@@ -20,6 +20,10 @@ switch($uri_path){
     case "/questions":
         $bootstrap->getQuestions();
         break;
+
+    case "/answer-question":
+        $bootstrap->postQuestionAnswer();
+        break;
 }
 
 //Give succes/error message to client

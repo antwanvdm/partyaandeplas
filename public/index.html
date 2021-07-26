@@ -28,12 +28,14 @@
     <a href="#" id="nfc" class="d-block rounded-full bottom-1.5 right-20 fixed z-30 bg-white p-2.5">
         <img src="images/nfc.png" alt="NFC check" class="d-block w-12 h-12"/>
     </a>
-    <div id="scan-modal" class="hide modal pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+    <div id="scan-modal"
+         class="hide modal pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
         <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
         <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
             <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
-                <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                     viewBox="0 0 18 18">
                     <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
                 </svg>
             </div>
@@ -41,15 +43,38 @@
             <!-- Add margin if you want to see some of the overlay behind the modal-->
             <div class="modal-content py-4 text-left px-6">
                 <div class="flex justify-between items-center pb-3">
-                    <p class="text-2xl font-bold">Scan the QR Code!</p>
+                    <p class="text-2xl font-bold modal-title">Scan the QR Code!</p>
                     <div id="scan-close" class="modal-close cursor-pointer z-50">
-                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                             viewBox="0 0 18 18">
                             <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
                         </svg>
                     </div>
                 </div>
 
                 <canvas id="scan-canvas" class="w-full h-full"></canvas>
+            </div>
+        </div>
+    </div>
+    <div id="question-modal"
+         class="hide modal pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+                <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                     viewBox="0 0 18 18">
+                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                </svg>
+            </div>
+
+            <!-- Add margin if you want to see some of the overlay behind the modal-->
+            <div class="modal-content py-4 text-left px-6">
+                <div class="flex justify-between items-center pb-3">
+                    <p class="text font-bold modal-title"></p>
+                </div>
+
+                <form id="question-form" class="w-full h-full question-answers"></form>
             </div>
         </div>
     </div>
@@ -64,15 +89,31 @@
         <h1 class="inline-block ml-2 text-lg leading-3 font-bold text-black">Party aan de Plas</h1>
     </header>
     <section class="px-4 mt-11" id="intro">
-        <p id="paragraph-text" class="text-base text mt-3 pb-4">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid facilis illo molestiae obcaecati rem sed!
-            Assumenda commodi cum expedita labore magnam nisi veritatis? Alias aperiam atque
-            cumque esse quaerat vero?
+        <p class="text-base text mt-3 pb-4">
+            Welkom bij de tocht der tochten, een geïmproviseerde mini-speurtocht om een klein beetje nader kennis te
+            maken met de omgeving. In deze activiteit kom je ook nog achter wat leuke feitjes over Loan, Iris en Antwan.
+            Of misschien ben je de ultieme kenner en weet je alles al? Aan het einde als iedereen terug is zullen we
+            direct de prijzenuitreiking doen (jazeker!) voor de top 3 deelnemers.
         </p>
-        <form id="name-form" class="relative">
+        <h2 class="font-bold">Hoe werkt het?</h2>
+        <ul class="my-3 list-disc pl-5">
+            <li>Je gaat na in het invullen van je naam door naar de kaart van onze huidige locatie.</li>
+            <li>Hierop staan in het rood de locaties aangegeven waar je naartoe kunt lopen.</li>
+            <li>Aangekomen bij een locatie kun je via een QR code (of voor de hippe mensen op Android NFC) het gevonden
+                kaartje scannen.
+            </li>
+            <li>Na het scannen krijg je een vraag en die vraag levert punten op als je het goed hebt. De locatie wordt
+                dan ook groen op de kaart als herkenning dat je hier bent geweest.
+            </li>
+            <li>Wanneer je klaar bent, of de tijd rechtsboven afgelopen is, kom je weer terug naar de startlocatie.</li>
+            <li>Voor de fanatiekelingen: er zijn ook een paar verborgen locaties die niet op de kaart staan. Als je
+                bonuspunten zoekt, kijk dan goed om je heen!
+            </li>
+        </ul>
+        <form id="name-form" class="d-block relative pb-2">
             <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-3"
                    id="name" type="text" aria-label="Naam" placeholder="Naam" required/>
-            <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-3"
+            <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-3 bg-green-500"
                    type="submit" value="Let's Go!"/>
         </form>
     </section>

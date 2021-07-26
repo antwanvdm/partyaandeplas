@@ -58,6 +58,28 @@ class Bootstrap
         $this->response['questions'] = Question::getAll();
     }
 
+    public function postQuestionAnswer()
+    {
+        try {
+            $this->processPost();
+        } catch (\Exception $e) {
+            return;
+        }
+
+        //First validate the actual data
+        $player = Player::getById($this->postData['playerId']);
+        $question = Question::getById($this->postData['questionId']);
+
+        //Store in DB
+        if ($player->saveAnswer($question->id, $this->postData['answer']) === false) {
+            $this->response['error'] = "Het opslaan is mislukt.";
+        } else {
+            $this->response['correct'] = $question->correct == $this->postData['answer'];
+            $this->response['answer'] = $question->{'answer' . $question->correct};
+            $this->response['fact'] = $question->fact;
+        }
+    }
+
     public function getResponseData(): array
     {
         return $this->response;
