@@ -48,7 +48,7 @@ const MapBoxInteraction = function (loadedCallback) {
         for (let question of questions) {
             this.questionMarkers[question.id] = {};
             this.questionMarkers[question.id].question = question;
-            if (!question.hidden) {
+            if (typeof this.questionMarkers[question.id].answered !== "undefined" || !question.hidden) {
                 let color = "#FF0000";
                 if (answeredQuestions.indexOf(question.id) > -1) {
                     this.questionMarkers[question.id].answered = true;
