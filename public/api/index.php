@@ -24,6 +24,10 @@ switch($uri_path){
     case "/answer-question":
         $bootstrap->postQuestionAnswer();
         break;
+
+    case "/generate-qrcodes":
+        $bootstrap->generateQRCodes();
+        break;
 }
 
 //Give succes/error message to client

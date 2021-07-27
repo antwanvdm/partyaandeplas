@@ -2,6 +2,11 @@
 
 namespace System;
 
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
+
 /**
  * Class Bootstrap
  * @package System
@@ -83,5 +88,19 @@ class Bootstrap
     public function getResponseData(): array
     {
         return $this->response;
+    }
+
+    public function generateQRCodes()
+    {
+        $questions = Question::getAll();
+        $renderer = new ImageRenderer(
+            new RendererStyle(400),
+            new ImagickImageBackEnd()
+        );
+        $writer = new Writer($renderer);
+
+        foreach ($questions as $question) {
+            $writer->writeFile(json_encode(["id" => $question->id, "application" => "padp"]), INCLUDES_PATH . "qrcodes/qrcode-{$question->id}.png");
+        }
     }
 }

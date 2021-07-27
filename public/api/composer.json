@@ -12,5 +12,8 @@
         "psr-4": {
             "System\\": "System"
         }
+    },
+    "require": {
+        "bacon/bacon-qr-code": "^2.0"
     }
 }
