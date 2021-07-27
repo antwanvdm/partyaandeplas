@@ -1,5 +1,11 @@
 import jsQR from "jsqr";
 
+/**
+ * Class to interact with external QR code library and stream camera to canvas for user while scanning a QR code
+ *
+ * @param callback
+ * @constructor
+ */
 const QRScan = function (callback) {
     this.video = document.createElement("video");
     this.canvasElement = document.getElementById("scan-canvas");
@@ -8,7 +14,7 @@ const QRScan = function (callback) {
     this.videoStream = null;
     this.callback = callback;
 
-    this.init = (callback) => {
+    this.init = () => {
         //Use facingMode: environment to attempt to get the front camera on phones
         navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}})
             .then((stream) => {
@@ -20,6 +26,9 @@ const QRScan = function (callback) {
             });
     }
 
+    /**
+     * Update the video with realtime webcam data
+     */
     this.tick = () => {
         if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
             this.canvas.drawImage(this.video, 0, 0, this.canvasElement.width, this.canvasElement.height);
@@ -27,6 +36,8 @@ const QRScan = function (callback) {
             let code = jsQR(imageData.data, imageData.width, imageData.height, {
                 inversionAttempts: "dontInvert",
             });
+
+            //If data is found, we can move on with the data from the QR code
             if (code) {
                 let parsedData = JSON.parse(code.data);
 
@@ -40,8 +51,10 @@ const QRScan = function (callback) {
         this.animationFrameId = requestAnimationFrame(this.tick);
     }
 
+    /**
+     * Close all & cancel camera & canvas for performance
+     */
     this.close = () => {
-        //Reset shizzles
         cancelAnimationFrame(this.animationFrameId);
         this.videoStream.stop();
         this.video = null;

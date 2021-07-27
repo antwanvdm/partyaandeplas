@@ -1,3 +1,9 @@
+/**
+ * Class to handle timer logic for application
+ *
+ * @param doneCallback
+ * @constructor
+ */
 const Timer = function (doneCallback) {
     this.timerElement = document.querySelector('#timer');
     let addedHour = new Date().getTime() + (60 * 60 * 1000);
@@ -15,11 +21,14 @@ const Timer = function (doneCallback) {
             localStorage.setItem('timer', this.countDownDate.toString());
         }
 
-        this.start();
-        this.interval = setInterval(() => this.start(), 1000);
+        this.update();
+        this.interval = setInterval(() => this.update(), 1000);
     }
 
-    this.start = () => {
+    /**
+     * Update the timer based on the difference between initial end time and current time
+     */
+    this.update = () => {
         //Current time to measure difference with initial time
         let now = new Date().getTime();
         let distance = this.countDownDate - now;
@@ -49,6 +58,9 @@ const Timer = function (doneCallback) {
         }
     }
 
+    /**
+     * Stop the timer and set to 00:00
+     */
     this.end = () => {
         clearInterval(this.interval);
         this.timerElement.innerHTML = "00:00";

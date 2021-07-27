@@ -1,6 +1,12 @@
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import settings from './application.config';
 
+/**
+ * Class to interact the the actual mapBox API
+ *
+ * @param loadedCallback
+ * @constructor
+ */
 const MapBoxInteraction = function (loadedCallback) {
     this.map = false;
     this.accessToken = settings.mapBoxAccessToken;
@@ -23,6 +29,12 @@ const MapBoxInteraction = function (loadedCallback) {
         this.map.on('load', loadedCallback);
     }
 
+    /**
+     * Create custom marker for location of user
+     *
+     * @param lat
+     * @param lng
+     */
     this.addCurrentLocation = (lat, lng) => {
         this.currentLocation = [lng, lat];
 
@@ -35,12 +47,22 @@ const MapBoxInteraction = function (loadedCallback) {
         this.map.setZoom(16);
     }
 
+    /**
+     * Update the location of the current user
+     *
+     * @param lat
+     * @param lng
+     */
     this.updateCurrentLocation = (lat, lng) => {
         this.currentLocation = [lng, lat];
         this.currentLocationMarker.setLngLat(this.currentLocation);
-        this.map.setCenter(this.currentLocation);
     }
 
+    /**
+     * Add the locations of the questions to the map
+     *
+     * @param questions
+     */
     this.addQuestionsLocations = (questions) => {
         let answeredLocalStorage = localStorage.getItem('answered');
         let answeredQuestions = answeredLocalStorage !== null ? JSON.parse(answeredLocalStorage) : [];
@@ -61,6 +83,11 @@ const MapBoxInteraction = function (loadedCallback) {
         }
     }
 
+    /**
+     * Re-create location but with a green color
+     *
+     * @param id
+     */
     this.markLocationAsDone = (id) => {
         if (typeof this.questionMarkers[id].marker !== "undefined") {
             this.questionMarkers[id].marker.remove();
@@ -73,10 +100,20 @@ const MapBoxInteraction = function (loadedCallback) {
             .addTo(this.map);
     }
 
+    /**
+     * Helper function
+     *
+     * @param meters
+     * @param latitude
+     * @returns {number}
+     */
     this.metersToPixelsAtMaxZoom = (meters, latitude) => {
         return meters / 0.075 / Math.cos(latitude * Math.PI / 180);
     }
 
+    /**
+     * No more interaction with mapbox possible
+     */
     this.disable = () => {
         this.map.boxZoom.disable();
         this.map.scrollZoom.disable();
