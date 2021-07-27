@@ -22,11 +22,6 @@ const QRScan = function (callback) {
 
     this.tick = () => {
         if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
-            //TODO Test the scan on mobile to see how it looks
-            // console.log(this.canvasElement.width);
-            // console.log(this.video.videoWidth);
-            // console.log(this.video.videoHeight);
-            // this.canvasElement.width = this.video.videoWidth;
             this.canvas.drawImage(this.video, 0, 0, this.canvasElement.width, this.canvasElement.height);
             let imageData = this.canvas.getImageData(0, 0, this.canvasElement.width, this.canvasElement.height);
             let code = jsQR(imageData.data, imageData.width, imageData.height, {
