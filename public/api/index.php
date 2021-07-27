@@ -11,21 +11,21 @@ header('Access-Control-Allow-Headers: Content-Type');
 $bootstrap = new \System\Bootstrap();
 
 //Simplified route system
-$uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-switch($uri_path){
-    case "/newplayer":
+$route = $_GET['r'] ?? '';
+switch($_GET['r']){
+    case "newplayer":
         $bootstrap->postNewPlayerForm();
         break;
 
-    case "/questions":
+    case "questions":
         $bootstrap->getQuestions();
         break;
 
-    case "/answer-question":
+    case "answer-question":
         $bootstrap->postQuestionAnswer();
         break;
 
-    case "/generate-qrcodes":
+    case "generate-qrcodes":
         $bootstrap->generateQRCodes();
         break;
 }

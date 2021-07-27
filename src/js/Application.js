@@ -39,7 +39,7 @@ const Application = function () {
 
         document.querySelector("#name").classList.remove("error");
 
-        fetch(`${settings.apiURL}newplayer`, {
+        fetch(`${settings.apiURL}?r=newplayer`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -86,7 +86,7 @@ const Application = function () {
     }
 
     this.getQuestions = () => {
-        fetch(`${settings.apiURL}questions`, {
+        fetch(`${settings.apiURL}?r=questions`, {
             method: 'GET',
             mode: 'cors',
             cache: 'no-cache',
@@ -170,7 +170,7 @@ const Application = function () {
         e.preventDefault();
 
         let questionId = document.querySelector("input[name='question-id']").value;
-        fetch(`${settings.apiURL}answer-question`, {
+        fetch(`${settings.apiURL}?r=answer-question`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
