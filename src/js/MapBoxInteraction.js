@@ -48,12 +48,12 @@ const MapBoxInteraction = function (loadedCallback) {
         for (let question of questions) {
             this.questionMarkers[question.id] = {};
             this.questionMarkers[question.id].question = question;
+            let color = "#FF0000";
+            if (answeredQuestions.indexOf(question.id) > -1) {
+                this.questionMarkers[question.id].answered = true;
+                color = "#00FF00";
+            }
             if (typeof this.questionMarkers[question.id].answered !== "undefined" || !question.hidden) {
-                let color = "#FF0000";
-                if (answeredQuestions.indexOf(question.id) > -1) {
-                    this.questionMarkers[question.id].answered = true;
-                    color = "#00FF00";
-                }
                 this.questionMarkers[question.id].marker = new mapboxgl.Marker({"color": color})
                     .setLngLat([question.lon, question.lat])
                     .addTo(this.map);
