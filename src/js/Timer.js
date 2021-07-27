@@ -30,9 +30,12 @@ const Timer = function (doneCallback) {
 
         //Change color to red once the danger zone arrives
         if (minutes <= 5 || distance < 0) {
-        // if (seconds <= 10 || distance < 0) {
+            // if (seconds <= 10 || distance < 0) {
             this.timerElement.classList.remove('text-green-500');
             this.timerElement.classList.add('text-red-500');
+        } else {
+            this.timerElement.classList.add('text-green-500');
+            this.timerElement.classList.remove('text-red-500');
         }
 
         //Update HTML
