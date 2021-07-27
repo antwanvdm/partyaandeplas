@@ -53,9 +53,9 @@ class Player
 
     /**
      * @param Player $player
-     * @return bool|int
+     * @return false|string
      */
-    public static function add(Player $player): bool|int
+    public static function add(Player $player)
     {
         $db = Database::getInstance();
         $statement = $db->prepare(
