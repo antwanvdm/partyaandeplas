@@ -1,9 +1,11 @@
 import settings from "./application.config";
 import MapBoxInteraction from "./MapBoxInteraction";
 import QRScan from "./QRScan";
+import Timer from "./Timer";
 
 const Application = function () {
     this.mapBoxInteraction = null;
+    this.nameForm = document.querySelector("#name-form");
     this.applicationWrapper = document.querySelector("#application-wrapper");
     this.loaderOverlay = document.querySelector(".loader-overlay");
     this.scanButton = document.querySelector("#scan");
@@ -11,6 +13,7 @@ const Application = function () {
     this.scanModal = document.querySelector("#scan-modal");
     this.questionModal = document.querySelector("#question-modal");
     this.questionForm = document.querySelector("#question-form");
+    this.endModal = document.querySelector("#end-modal");
     this.playerId = null;
     this.qrScan = null;
 
@@ -20,7 +23,7 @@ const Application = function () {
             return;
         }
 
-        document.querySelector("#name-form").addEventListener('submit', (e) => this.playerFormSubmitHandler(e));
+        this.nameForm.addEventListener('submit', (e) => this.playerFormSubmitHandler(e));
         this.scanButton.addEventListener('click', (e) => this.scanOpenClickHandler(e));
         this.scanClose.addEventListener('click', (e) => this.scanCloseClickHandler(e));
         this.questionForm.addEventListener('submit', (e) => this.questionFormSubmitHandler(e));
@@ -73,6 +76,7 @@ const Application = function () {
         navigator.geolocation.getCurrentPosition((position) => {
             this.mapBoxInteraction.addCurrentLocation(position.coords.latitude, position.coords.longitude);
             this.getQuestions();
+            new Timer(() => this.done());
             this.loaderOverlay.classList.add("hide");
             document.querySelector("#intro").remove();
             navigator.geolocation.watchPosition((position) => this.mapBoxInteraction.updateCurrentLocation(position.coords.latitude, position.coords.longitude));
@@ -212,6 +216,12 @@ const Application = function () {
             currentAnswered.push(parseInt(questionId));
             localStorage.setItem('answered', JSON.stringify(currentAnswered));
         }
+    }
+
+    this.done = () => {
+        this.endModal.classList.remove("hide");
+        this.endModal.classList.remove('pointer-events-none');
+        document.querySelector('body').classList.add('modal-active');
     }
 
     this.init();

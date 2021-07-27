@@ -14,8 +14,10 @@ const MapBoxInteraction = function (loadedCallback) {
         this.map = new mapboxgl.Map({
             container: 'maps',
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [5.104480, 52.092876],
-            zoom: 6
+            center: [4.506952506774258, 51.937534184423896],
+            zoom: 10,
+            minZoom: 12,
+            maxZoom: 18
         });
 
         this.map.on('load', loadedCallback);
