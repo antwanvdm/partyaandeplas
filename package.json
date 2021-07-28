@@ -5,17 +5,17 @@
   "main": "index.js",
   "dependencies": {
     "jsqr": "^1.4.0",
-    "mapbox-gl": "^2.0.0"
+    "mapbox-gl": "^2.3.1"
   },
   "devDependencies": {
-    "autoprefixer": "^10.1.0",
-    "css-loader": "^5.0.1",
-    "postcss-loader": "^4.1.0",
-    "style-loader": "^2.0.0",
-    "tailwindcss": "^2.0.2",
-    "webpack": "^5.11.0",
-    "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "^3.11.0"
+    "autoprefixer": "^10.3.1",
+    "css-loader": "^6.2.0",
+    "postcss-loader": "^6.1.1",
+    "style-loader": "^3.2.1",
+    "tailwindcss": "^2.2.7",
+    "webpack": "^5.47.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
     "build:dev": "webpack --mode development",
