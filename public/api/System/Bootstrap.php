@@ -99,7 +99,7 @@ class Bootstrap
     }
 
     /**
-     *
+     * Generate PNG files based on questions in DB
      */
     public function generateQRCodes()
     {
@@ -113,5 +113,13 @@ class Bootstrap
         foreach ($questions as $question) {
             $writer->writeFile(json_encode(["id" => $question->id, "application" => "padp"]), INCLUDES_PATH . "qrcodes/qrcode-{$question->id}.png");
         }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function getPlayerRankedByScore()
+    {
+        $this->response['data'] = Player::getAllRanked();
     }
 }

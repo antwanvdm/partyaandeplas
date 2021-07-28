@@ -12,21 +12,21 @@ class Player
     public string $name;
 
     /**
-     * @param Player $player
-     * @return Player[]
+     * @return array
      * @throws \Exception
      */
-    public static function getAll(Player $player): array
+    public static function getAllRanked(): array
     {
         $db = Database::getInstance();
         $statement = $db->prepare(
-            "SELECT * FROM players AS p
-                   LEFT JOIN player_question AS pq ON p.id = pq.player_id"
+            "SELECT p.id, p.name, SUM(pq.score) as total_score FROM players AS p
+                   LEFT JOIN player_question AS pq ON p.id = pq.player_id
+                   GROUP BY p.id
+                   ORDER BY total_score DESC"
         );
 
         $statement->execute();
-
-        return $statement->fetchAll(\PDO::FETCH_CLASS, "System\\Player");
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**

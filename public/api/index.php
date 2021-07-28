@@ -28,6 +28,10 @@ switch($_GET['r']){
     case "generate-qrcodes":
         $bootstrap->generateQRCodes();
         break;
+
+    case "player-ranks":
+        $bootstrap->getPlayerRankedByScore();
+        break;
 }
 
 //Give succes/error message to client
