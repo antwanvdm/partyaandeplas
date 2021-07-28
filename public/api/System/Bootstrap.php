@@ -80,7 +80,7 @@ class Bootstrap
         }
 
         //Store in DB
-        if ($player->saveAnswer($question->id, $this->postData['answer']) === false) {
+        if ($player->saveAnswer($question, $this->postData['answer'], $this->postData['seconds']) === false) {
             $this->response['error'] = "Het opslaan is mislukt.";
         } else {
             $this->response['correct'] = $question->correct == $this->postData['answer'];

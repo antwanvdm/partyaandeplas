@@ -14,7 +14,7 @@ class Question
     public string $answer2;
     public string $answer3;
     public string $answer4;
-    public string $correct;
+    public int $correct;
     public string $fact;
     public bool $hidden;
     public float $lat;

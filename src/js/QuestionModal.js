@@ -9,6 +9,8 @@ import settings from "./application.config";
 const QuestionModal = function (answerCallback) {
     this.modal = document.querySelector("#question-modal");
     this.form = document.querySelector("#question-form");
+    this.secondsTakenforQuestion = 0;
+    this.secondsInterval = null;
 
     this.init = () => {
         this.form.addEventListener('submit', (e) => this.formSubmitHandler(e));
@@ -31,6 +33,11 @@ const QuestionModal = function (answerCallback) {
             return;
         }
 
+        //Reset seconds to 0 and start the interval to count seconds a player takes
+        this.secondsTakenforQuestion = 0;
+        this.secondsInterval = setInterval(() => this.secondsTakenforQuestion++, 1000);
+
+        //Fill the modal with data
         this.modal.querySelector('.modal-title').innerHTML = question.title;
         this.modal.querySelector('.question-answers').innerHTML = `
             <div id="answers">
@@ -81,6 +88,7 @@ const QuestionModal = function (answerCallback) {
     this.formSubmitHandler = (e) => {
         e.preventDefault();
 
+        clearInterval(this.secondsInterval);
         fetch(`${settings.apiURL}?r=answer-question`, {
             method: 'POST',
             mode: 'cors',
@@ -91,7 +99,8 @@ const QuestionModal = function (answerCallback) {
             body: JSON.stringify({
                 playerId: document.querySelector("input[name='player-id']").value,
                 questionId: document.querySelector("input[name='question-id']").value,
-                answer: document.querySelector("input[name='answer']:checked").value
+                answer: document.querySelector("input[name='answer']:checked").value,
+                seconds: this.secondsTakenforQuestion
             })
         }).then((response) => {
             return response.json();

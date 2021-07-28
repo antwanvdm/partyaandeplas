@@ -78,30 +78,52 @@ class Player
     }
 
     /**
-     * @param $questionId
+     * @param Question $question
      * @param $answer
+     * @param $seconds
      * @return bool
      */
-    public function saveAnswer($questionId, $answer): bool
+    public function saveAnswer($question, $answer, $seconds): bool
     {
         $db = Database::getInstance();
+
         $statement = $db->prepare(
             "INSERT INTO player_question
-                   (player_id, question_id, answer, score)
-                   VALUES(:playerId, :questionId, :answer, :score)"
+                   (player_id, question_id, answer, score, seconds)
+                   VALUES(:playerId, :questionId, :answer, :score, :seconds)"
         );
 
         try {
             return $statement->execute(
                 [
                     ':playerId' => $this->id,
-                    ':questionId' => $questionId,
+                    ':questionId' => $question->id,
                     ':answer' => $answer,
-                    ':score' => 1,
+                    ':score' => $this->calculateScore($question->correct, $answer, $seconds),
+                    ':seconds' => $seconds,
                 ]
             );
         } catch (\PDOException $e) {
+            echo $e->getMessage();
             return false;
         }
+    }
+
+    /**
+     * @param int $correct
+     * @param int $answer
+     * @param $seconds
+     * @return float
+     */
+    private function calculateScore(int $correct, int $answer, $seconds): float
+    {
+        if ($correct !== $answer) {
+            return 0;
+        }
+
+        $maxScore = 4;
+        $maxSecondsForBonus = 40;
+        $score = $maxScore - (($seconds / $maxSecondsForBonus) * $maxScore);
+        return $score < 1 ? 1 : $score;
     }
 }
