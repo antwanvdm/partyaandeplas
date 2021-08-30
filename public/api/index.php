@@ -12,7 +12,7 @@ $bootstrap = new \System\Bootstrap();
 
 //Simplified route system
 $route = $_GET['r'] ?? '';
-switch($_GET['r']){
+switch($route){
     case "newplayer":
         $bootstrap->postNewPlayerForm();
         break;
