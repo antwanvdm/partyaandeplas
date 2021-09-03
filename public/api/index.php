@@ -31,6 +31,9 @@ switch($route){
 
     case "player-ranks":
         $bootstrap->getPlayerRankedByScore();
+        echo "<pre>";
+        print_r($bootstrap->getResponseData());
+        exit;
         break;
 }
 
