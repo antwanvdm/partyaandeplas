@@ -1,8 +1,24 @@
-# Party aan de Plas
+# 🥳 Party aan de Plas
 
-todo..
+The application is built to host a 'scavenger hunt' based on QR codes for a private party.
+(and yes, the party was a great success!) If you would like to see a demo, you can visit
+[https://partyaandeplas.antwan.eu](https://partyaandeplas.antwan.eu). The QR codes for this hunt
+are stored [here](public/api/qrcodes), so you are actually able to scan something. Warning: Everything
+is in Dutch and the questions are about me and my family ;-)
 
-## Getting started
+My next step will be to create a standalone application with an actual 'login' dashboard. This
+way I can create something pretty awesome for everyone hosting parties to use. Big shout out to
+[Mapbox GL](https://www.mapbox.com/mapbox-gljs), [jsQR](https://cozmo.github.io/jsQR) and 
+[Bacon QR Code](https://github.com/Bacon/BaconQrCode) as I used these libraries to make it happen. 
+
+**NOTE**: During the party I did find 2 bugs on phones from guests:
+* Some browsers seem to have issues requesting your location. Have to invest why older safaris are
+  having issues. It simply doesn't ask for approval but immediately returns to the denied code while 
+  they never received any question to accept location sharing.
+* On 1 phone one some moment the application broke completely on the map view. Seemed to have something
+  to do with zooming in the browser instead of on the map...
+
+## Getting started (install guide)
 
 To get started, you need:
 - A mapbox GL account to get an access token;
