@@ -3,11 +3,13 @@
 The application is built to host a 'scavenger hunt' based on QR codes for a private party.
 (and yes, the party was a great success!) If you would like to see a demo, you can visit
 [https://partyaandeplas.antwan.eu](https://partyaandeplas.antwan.eu). The QR codes for this hunt
-are stored [here](public/api/qrcodes), so you are actually able to scan something. Warning: Everything
-is in Dutch and the questions are about me and my family ;-)
+are stored [here](public/api/qrcodes), so you are actually able to scan something. The map location
+markers can be seen in the "Kralingse Plas, Rotterdam" but scanning works from anywhere (you just 
+won't see the markers change from red to green after answering a question if the focus is somewhere 
+else) Warning: Everything is in Dutch and the questions are about me and my family ;-)
 
 My next step will be to create a standalone application with an actual 'login' dashboard. This
-way I can create something pretty awesome for everyone hosting there own parties wit customised scavenger
+way I can create something pretty awesome for everyone hosting their own parties wit customised scavenger
 hunts. Big shout out to [Mapbox GL](https://www.mapbox.com/mapbox-gljs), [jsQR](https://cozmo.github.io/jsQR)
 and [Bacon QR Code](https://github.com/Bacon/BaconQrCode) as I used these libraries to make it happen. 
 
