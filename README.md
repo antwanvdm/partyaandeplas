@@ -8,7 +8,7 @@ is in Dutch and the questions are about me and my family ;-)
 
 My next step will be to create a standalone application with an actual 'login' dashboard. This
 way I can create something pretty awesome for everyone hosting there own parties wit customised scavenger
-hunts. Big shout out to[Mapbox GL](https://www.mapbox.com/mapbox-gljs), [jsQR](https://cozmo.github.io/jsQR)
+hunts. Big shout out to [Mapbox GL](https://www.mapbox.com/mapbox-gljs), [jsQR](https://cozmo.github.io/jsQR)
 and [Bacon QR Code](https://github.com/Bacon/BaconQrCode) as I used these libraries to make it happen. 
 
 **NOTE**: During the party I did find 2 bugs on phones from guests:
